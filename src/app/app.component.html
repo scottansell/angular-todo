@@ -1,20 +1,28 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="container">
 
+    <span class="title"><i class="fas fa-list-ul"></i> <b>Angular</b> Todo List</span>
+    <hr>
+
+    <div class="interface">
+        <input type="text" autocomplete="off" [(ngModel)]="newTask.name" maxlength="45">
+        <button class="add" (click)="addTask()">Add</button>
+
+        <div [@collapseAnim]="hideOnBool( newTask.name.length === 0 )" class="task newTask"> <i class="far fa-check-square nohover"></i> <span>{{newTask.name}}</span> <small>Jun 12</small> </div>
+    </div>
+    
+    <div class="tasks">
+
+        <span class="section">In Progress</span>
+        <div *ngFor="let task of tasks | completedFilter:{completed: false}" class="task"> <i class="far fa-check-square unchecked" (click)="completeTask(task.date)"></i> <span>{{ task.name }}</span> <small>{{ task.date | date }}</small> </div>
+        <!-- <div class="task"> <i class="far fa-check-square unchecked"></i> <span>Task Five</span> <small>Jun 12</small> </div> -->
+    
+        <span class="section">Completed <small (click)="toggleCompleted()">{{ hideOnBool(!hideCompletedTasks) }}</small></span>
+        <div [@collapseAnim]="hideOnBool( hideCompletedTasks )" class="completed">
+            <div *ngFor="let task of tasks | completedFilter:{completed: true}" class="task"> <i class="fas fa-trash-alt trash" (click)="removeTask(task.date)"></i> <span>{{ task.name }}</span> <small>{{ task.date | date }}</small> </div>
+            <!-- <div class="task"> <i class="far fa-check-square checked"></i> <span>Task Two</span> <small>Jun 12</small> </div> -->
+            <!-- <div class="task"> <i class="far fa-check-square checked"></i> <span>Task Three</span> <small>Jun 12</small> </div> -->
+        </div>
+
+    </div>
+
+</div>
